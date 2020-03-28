@@ -17,8 +17,5 @@ module.exports = {
 
     const creatUser = await user.save();
     return { ...creatUser._doc, _id: createUser._id.toString() };
-  },
-  hello: function() {
-    return "hello";
   }
 };
