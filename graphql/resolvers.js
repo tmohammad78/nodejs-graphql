@@ -5,9 +5,9 @@ const validator = require("validator");
 module.exports = {
   createUser: async function({ userInput }, req) {
     // const email = userInput.email;
-    const error = [];
+    const errors = [];
     if (!validator.isEmail(userInput.email)) {
-      error.push({
+      errors.push({
         message: "Error is invalid"
       });
     }
@@ -15,13 +15,15 @@ module.exports = {
       validator.isEmpty(userInput.password) ||
       validator.isLength(userInput.password, { min: 5 })
     ) {
-      error.push({
+      errors.push({
         message: "pass is short"
       });
     }
 
-    if (error.length > 0) {
+    if (errors.length > 0) {
       const error = new Error("invalid type input");
+      error.data = errors;
+      error.code = 422;
       throw error;
     }
     const existngUser = await User.findOne({ email: userInput.email });
