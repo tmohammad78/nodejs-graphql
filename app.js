@@ -8,6 +8,7 @@ const graphqlHttp = require("express-graphql");
 const app = express();
 const graphqlSchema = require("./graphql/schema");
 const graphqlResolver = require("./graphql/resolvers");
+
 const fileStorage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "images");
@@ -50,7 +51,8 @@ app.use(
   "/graphql",
   graphqlHttp({
     schema: graphqlSchema,
-    rootValue: graphqlResolver
+    rootValue: graphqlResolver,
+    graphiql: true
   })
 );
 
@@ -64,7 +66,7 @@ app.use((error, req, res, next) => {
 
 mongoose
   .connect(
-    "mongodb+srv://maximilian:9u4biljMQc4jjqbe@cluster0-ntrwp.mongodb.net/messages?retryWrites=true"
+    "mongodb+srv://mohammad:godisbigest@cluster0-m16kn.mongodb.net/test?retryWrites=true&w=majority"
   )
   .then((result) => {
     app.listen(8080);
